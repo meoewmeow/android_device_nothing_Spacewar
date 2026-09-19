@@ -35,3 +35,9 @@ TARGET_ENABLE_BLUR := true
 
 # Boot Animation
 TARGET_BOOT_ANIMATION_RES := 1080
+
+# adb_root (the adbroot_service behind `adb root`) is gated behind WITH_SU in
+# vendor/lineage/config/common.mk, which is off by default.
+ifneq ($(TARGET_BUILD_VARIANT),user)
+PRODUCT_PACKAGES += adb_root
+endif

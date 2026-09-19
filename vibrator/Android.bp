@@ -24,4 +24,11 @@ cc_binary {
         "libaacvibrator",
         "android.hardware.vibrator-V2-ndk",
     ],
+    target: {
+        // The Spacewar Richtap library is arm64-only. Cuttlefish supplies its
+        // own generic vibrator implementation on x86_64.
+        android_x86_64: {
+            enabled: false,
+        },
+    },
 }

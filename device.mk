@@ -9,6 +9,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
 # Setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-8192-dalvik-heap.mk)
 
+# Development builds: ship the maintainer's ADB public key so /adb_keys is
+# present in normal boot and recovery, and ADB stays authorized even when the
+# framework cannot authorize it (e.g. system_server crash loops). The build
+# system clears PRODUCT_ADB_KEYS for non-debuggable builds, and the adb_keys
+# module skips installation unless the build is debuggable.
+PRODUCT_ADB_KEYS := device/nothing/Spacewar/adb_keys
+
 # Add common definitions for Qualcomm
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 

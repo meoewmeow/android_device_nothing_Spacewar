@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Play Services 26.x calls RoleManager.getRoleHolders(). MindTheGapps' allowlist
+     (privapp-permissions-google-product.xml) does not grant GET_ROLE_HOLDERS, so newer
+     GmsCore updates fail OAuth with a SecurityException and Google sign-in breaks.
+     SystemConfig merges privapp entries for the same package across files.
+     MANAGE_/OBSERVE_ROLE_HOLDERS are signature|installer|module, not privileged, so a
+     privapp entry cannot grant them.
+-->
+<permissions>
+    <privapp-permissions package="com.google.android.gms">
+        <permission name="android.permission.GET_ROLE_HOLDERS"/>
+    </privapp-permissions>
+</permissions>

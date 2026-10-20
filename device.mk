@@ -284,6 +284,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/permissions/privapp-permissions-hotword.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-hotword.xml
 
+# Play Services role permission missing from MindTheGapps' allowlist
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/permissions/privapp-permissions-gms-roles.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-gms-roles.xml
+
 # Init scripts
 PRODUCT_PACKAGES += \
     fstab.default \

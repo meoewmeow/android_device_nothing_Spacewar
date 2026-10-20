@@ -1,0 +1,20 @@
+# AxDiagnostics (system_ext priv-app, system_app domain) reads kernel
+# performance counters to populate its CPU, memory, I/O and thermal pages.
+# Stock policy grants appdomain only proc_meminfo, so these reads fail with
+# EACCES and the affected pages have no data.
+#
+# These are read-only, system-wide performance counters. system_app is a
+# platform-signed, in-ROM domain and is NOT part of the all_untrusted_apps
+# neverallow set in system/sepolicy/private/app_neverallows.te, so granting
+# read here is permitted by policy.
+#
+# Deliberately NOT granted: /proc/sys/vm/drop_caches and
+# /proc/sys/vm/compact_memory, which are writable kernel controls rather than
+# counters. The corresponding AxDiagnostics actions stay non-functional.
+allow system_app proc_loadavg:file r_file_perms;
+allow system_app proc_stat:file r_file_perms;
+allow system_app proc_diskstats:file r_file_perms;
+allow system_app proc_vmstat:file r_file_perms;
+allow system_app proc_pressure_cpu:file r_file_perms;
+allow system_app proc_pressure_io:file r_file_perms;
+allow system_app proc_pressure_mem:file r_file_perms;

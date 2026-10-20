@@ -208,3 +208,8 @@ CONFIG_IEEE80211AX := true
 
 # Include the proprietary files BoardConfig.
 include vendor/nothing/Spacewar/BoardConfigVendor.mk
+
+# GApps are built in (see lineage_Spacewar.mk). Board config is evaluated
+# separately from product config, so this must be set here too for
+# BoardConfigReservedSize.mk to stop reserving space for them.
+WITH_GMS := true

@@ -15,6 +15,24 @@ $(call inherit-product, device/nothing/Spacewar/device.mk)
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
+# Google apps (MindTheGapps, Android 16 "baklava"), replacing microG. Plain
+# inherit-product on purpose: a missing vendor/gapps must fail the build rather
+# than silently ship a ROM without Google. WITH_GMS also drops the product
+# partition space Lineage otherwise reserves for flashing GApps later.
+WITH_GMS := true
+$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)
+
+# vendor/addons installs its own google.xml as google-addons.xml (renamed there) so
+# it does not collide with MindTheGapps' Soong module of the same name. Both files
+# are kept: sysconfig reads every XML in the directory. (Filtering PRODUCT_PACKAGES
+# here cannot work: inherit-product is deferred until after this file is read.)
+
+# MindTheGapps supplies libjni_latinimegoogle; don't also require the
+# same-named prebuilt bundled with AOSP LatinIME.
+SOONG_CONFIG_NAMESPACES += lineage_cuttlefish
+SOONG_CONFIG_lineage_cuttlefish += disable_latinime_google_jni
+SOONG_CONFIG_lineage_cuttlefish_disable_latinime_google_jni := true
+
 # Device identifier. This must come after all inclusions.
 PRODUCT_NAME := lineage_Spacewar
 PRODUCT_DEVICE := Spacewar
